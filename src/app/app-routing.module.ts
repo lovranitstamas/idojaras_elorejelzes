@@ -8,13 +8,13 @@ import {LoginComponent} from './user/login/login.component';
 import {LoggedInGuard} from './shared/logged-in.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'wheather',  component: WheatherComponent},
+  {path: '', redirectTo: '/user/login', pathMatch: 'full'},
+  // {path: 'home', component: HomeComponent },
+  {path: 'wheather',  component: WheatherComponent, canActivate: [LoggedInGuard]},
   {
     path: 'user',
     children: [
-      {path: '', component: ProfileComponent, canActivate: [LoggedInGuard]},
+      // {path: '', component: ProfileComponent, canActivate: [LoggedInGuard]},
       {path: 'login', component: LoginComponent}
     ]
   },
@@ -26,9 +26,9 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
   static routableComponents = [
-    HomeComponent,
+    // HomeComponent,
     WheatherComponent,
     LoginComponent,
-    ProfileComponent
+    // ProfileComponent
   ];
 }

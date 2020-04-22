@@ -2,6 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {UserService} from '../../shared/user.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserModel} from '../../shared/user-model';
 
 /**
  * Our custom validator
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
   onProcess = false;
   loginForm: FormGroup;
   password: any;
+  private _user: UserModel;
 
   @HostListener('input')
   oninput() {
@@ -52,8 +54,29 @@ export class LoginComponent implements OnInit {
     this.onProcess = true;
 
     if (form.valid) {
-      console.log(form.value);
+      if (this._userService.loginFromLocaleStorage(form)) {
+        this.makeUserInstance(form);
+        this._router.navigate(['/wheather']);
+      } else {
+        // API
+
+        // subscribe next function
+        // Save the user in the local storage
+        this._userService.saveUserInLocalStorage(form);
+
+        this.makeUserInstance(form);
+        this._router.navigate(['/wheather']);
+        // subscribe error function
+
+      }
     }
+  }
+
+  makeUserInstance(form) {
+    this._user = new UserModel();
+
+    this._user.usernameFunction = form.value.username;
+    this._userService.setUserToActive(this._user);
   }
 
 

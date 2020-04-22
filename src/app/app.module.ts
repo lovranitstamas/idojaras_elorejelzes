@@ -4,6 +4,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
 import {AppRoutingModule} from './app-routing.module';
 import {NgbModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import {StorageServiceModule} from 'ngx-webstorage-service';
+import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 
@@ -15,7 +17,7 @@ import {ProfileComponent} from './user/profile/profile.component';
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {UserService} from './shared/user.service';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import {LocalStorageService} from './shared/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -34,11 +36,14 @@ import {ReactiveFormsModule} from '@angular/forms';
     AppRoutingModule,
     ReactiveFormsModule,
     NgbModule,
-    NgbAlertModule
+    NgbAlertModule,
+    StorageServiceModule,
+    HttpClientModule
   ],
   providers: [
     UserService,
     LoggedInGuard,
+    LocalStorageService,
     // {provide: 'API_URL', useValue: 'http://localhost:1234/'}
     {provide: 'API_URL', useValue: './'}
   ],
