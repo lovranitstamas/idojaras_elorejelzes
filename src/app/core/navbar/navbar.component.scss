@@ -1,0 +1,47 @@
+@import "../../../sass/variables";
+
+nav {
+  background-color: $menu-background;
+
+  text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white,
+  1px 1px 0 $white;
+
+  .home-link {
+    text-shadow: none !important;
+  }
+
+  button.navbar-toggler {
+    border: 2px solid $hamburger-menu;
+    border-radius: 5px;
+
+    span.navbar-toggler-icon span {
+      display: block;
+      width: 30px;
+      border-bottom: solid 5px $hamburger-menu;
+      height: 9px;
+    }
+  }
+
+  ul {
+    position: relative;
+
+    li.nav-item {
+      a.nav-link {
+        color: $nav-link-text-color;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  nav {
+    ul {
+      li.nav-item:hover {
+        background-color: $yellow;
+        border-radius: 5px;
+      }
+    }
+  }
+}

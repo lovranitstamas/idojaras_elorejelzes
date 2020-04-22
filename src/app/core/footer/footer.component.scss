@@ -1,0 +1,13 @@
+@import "../../../sass/variables";
+
+footer {
+  background-color: $menu-background;
+  color: $yellow;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  .container .row {
+    height: 130px;
+  }
+}

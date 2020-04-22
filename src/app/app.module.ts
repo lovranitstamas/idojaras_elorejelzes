@@ -1,18 +1,43 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CoreModule} from './core/core.module';
+import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
-import {CoreModule} from './core/core.module';
+
+import {HomeComponent} from './home/home.component';
+import {WheatherComponent} from './wheather/wheather.component';
+import {LoginComponent} from './user/login/login.component';
+import {ProfileComponent} from './user/profile/profile.component';
+
+import {LoggedInGuard} from './shared/logged-in.guard';
+import {UserService} from './shared/user.service';
+
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    WheatherComponent,
+    LoginComponent,
+    ProfileComponent,
+
+    ...AppRoutingModule.routableComponents,
   ],
   imports: [
     BrowserModule,
-    CoreModule
+    BrowserAnimationsModule,
+    CoreModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    LoggedInGuard,
+    // {provide: 'API_URL', useValue: 'http://localhost:1234/'}
+    {provide: 'API_URL', useValue: './'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
