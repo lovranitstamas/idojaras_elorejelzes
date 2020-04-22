@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreModule} from './core/core.module';
 import {AppRoutingModule} from './app-routing.module';
+import {NgbModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AppComponent} from './app.component';
 
@@ -13,7 +14,7 @@ import {ProfileComponent} from './user/profile/profile.component';
 
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {UserService} from './shared/user.service';
-
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +31,10 @@ import {UserService} from './shared/user.service';
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    NgbModule,
+    NgbAlertModule
   ],
   providers: [
     UserService,
