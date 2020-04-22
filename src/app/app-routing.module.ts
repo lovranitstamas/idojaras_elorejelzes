@@ -2,6 +2,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {HomeComponent} from './home/home.component';
 import {WheatherComponent} from './wheather/wheather.component';
+import {PageNotFoundComponent} from './core/page-not-found/page-not-found.component';
 
 import {ProfileComponent} from './user/profile/profile.component';
 import {LoginComponent} from './user/login/login.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
       {path: 'login', component: LoginComponent}
     ]
   },
+  {path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({
@@ -29,6 +31,7 @@ export class AppRoutingModule {
     // HomeComponent,
     WheatherComponent,
     LoginComponent,
-    // ProfileComponent
+    // ProfileComponent,
+    PageNotFoundComponent
   ];
 }
