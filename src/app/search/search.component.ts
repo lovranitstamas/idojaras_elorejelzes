@@ -14,9 +14,9 @@ export class SearchComponent implements OnInit {
   results: any;
 
   constructor(private _weather: WeatherMapService,
-              private router: Router,
-              private route: ActivatedRoute) {
-    this.route
+              private _router: Router,
+              private _route: ActivatedRoute) {
+    this._route
       .queryParams
       .subscribe(params => {
         this.query = params.query || '';
@@ -41,13 +41,14 @@ export class SearchComponent implements OnInit {
 
   renderResults(res: any): void {
     this.results = null;
-    if (res && res.city) {
+    console.log(res);
+    /*if (res && res.city) {
       this.results = res.city;
-    }
+    }*/
   }
 
   submit(queryParam: string): void {
-    this.router.navigate(['weather'], {queryParams: {query: queryParam}}).then(() => this.search());
+    this._router.navigate(['weather'], {queryParams: {query: queryParam}}).then(() => this.search());
   }
 
 }

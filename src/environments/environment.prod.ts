@@ -1,3 +1,6 @@
+import {WeatherAPIKey} from './weatherApiKey';
+
 export const environment = {
-  production: true
+  production: true,
+  weatherApiKey: WeatherAPIKey
 };

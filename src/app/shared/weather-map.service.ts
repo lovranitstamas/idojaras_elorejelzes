@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +17,8 @@ export class WeatherMapService {
     if (params) {
       queryURL = `${queryURL}?${params.join(',')}`;
     }
-
-    const apiKey = 5;
-    // const apiKey = environment.weatherApiKey;
+    const apiKey = environment.weatherApiKey;
     queryURL = `${queryURL}&appid=${apiKey}`;
-
-    const headersParam = new HttpHeaders({
-      Authorization: `Bearer ${apiKey}`
-    });
-    const options = {
-      headers: headersParam
-    };
 
     return this._http.request('GET', queryURL);
   }
