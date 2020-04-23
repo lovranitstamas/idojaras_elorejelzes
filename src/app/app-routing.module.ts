@@ -11,7 +11,7 @@ import {LoggedInGuard} from './shared/logged-in.guard';
 const routes: Routes = [
   {path: '', redirectTo: '/user/login', pathMatch: 'full'},
   // {path: 'home', component: HomeComponent },
-  {path: 'wheather',  component: WheatherComponent, canActivate: [LoggedInGuard]},
+  {path: 'weather',  component: WheatherComponent, /*canActivate: [LoggedInGuard]*/},
   {
     path: 'user',
     children: [

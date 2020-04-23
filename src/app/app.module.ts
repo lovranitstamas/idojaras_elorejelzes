@@ -13,11 +13,13 @@ import {HomeComponent} from './home/home.component';
 import {WheatherComponent} from './wheather/wheather.component';
 import {LoginComponent} from './user/login/login.component';
 import {ProfileComponent} from './user/profile/profile.component';
+import {SearchComponent} from './search/search.component';
 
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {UserService} from './shared/user.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {LocalStorageService} from './shared/local-storage.service';
+import {WeatherMapService} from './shared/weather-map.service';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,8 @@ import {LocalStorageService} from './shared/local-storage.service';
     WheatherComponent,
     LoginComponent,
     ProfileComponent,
-
-    ...AppRoutingModule.routableComponents,
+    SearchComponent,
+    ...AppRoutingModule.routableComponents
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,7 @@ import {LocalStorageService} from './shared/local-storage.service';
     UserService,
     LoggedInGuard,
     LocalStorageService,
+    WeatherMapService,
     // {provide: 'API_URL', useValue: 'http://localhost:1234/'}
     {provide: 'API_URL', useValue: './'}
   ],
