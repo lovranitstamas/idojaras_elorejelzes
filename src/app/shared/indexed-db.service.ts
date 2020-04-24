@@ -46,7 +46,7 @@ export class IndexedDBService {
       const db = (event.target as IDBOpenDBRequest).result;
 
       const cityData = [
-        {sn: '5545-55-5555', name: 'Donnda', age: 32, email: 'tamas76@home.org'}
+        // {sn: '5545-55-5555', name: 'Donnda', age: 32, email: 'tamas76@home.org'}
       ];
 
       // open a read/write db transaction, ready for adding the data
