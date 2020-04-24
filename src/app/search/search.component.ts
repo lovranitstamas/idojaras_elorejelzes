@@ -11,6 +11,7 @@ export class SearchComponent implements OnInit {
 
   query: string;
   results: any;
+  dbReq = indexedDB.open('weatherDB', 1);
 
   // http://bulk.openweathermap.org/sample/
   // private _jsonURL = './assets/data/weather_teszt.json';
@@ -28,6 +29,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     // this.search();
     this.createIndexedDB();
+    this.addIndexedDB();
   }
 
   search(): void {
@@ -54,24 +56,23 @@ export class SearchComponent implements OnInit {
     this._router.navigate(['weather'], {queryParams: {query: queryParam}}).then(() => this.search());
   }
 
-  createIndexedDB(){
-    let db;
-    const dbReq = indexedDB.open('weatherDB', 1);
-    dbReq.onupgradeneeded = (event) => {
+  createIndexedDB() {
+    // https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction/onerror
+    this.dbReq.onupgradeneeded = (event) => {
       // Set the db variable to our database so we can use it!
-      db = (event.target as IDBOpenDBRequest).result;
+      const db = (event.target as IDBOpenDBRequest).result;
 
       // Create an object store named notes. Object stores
       // in databases are where data are stored.
-      const objectStore = db.createObjectStore('customers', { keyPath: 'ssn' });
+      const objectStore = db.createObjectStore('customers', {keyPath: 'ssn'});
 
       // Create an index to search customers by name. We may have duplicates
       // so we can't use a unique index.
-      objectStore.createIndex('name', 'name', { unique: false });
+      objectStore.createIndex('name', 'name', {unique: false});
 
       // Create an index to search customers by email. We want to ensure that
       // no two customers have the same email, so use a unique index.
-      objectStore.createIndex('email', 'email', { unique: true });
+      objectStore.createIndex('email', 'email', {unique: true});
 
       const customerData = [
         {ssn: '444-44-4444', name: 'Bill', age: 35, email: 'bill@company.com'},
@@ -86,16 +87,33 @@ export class SearchComponent implements OnInit {
         customerData.forEach((customer) => {
           customerObjectStore.add(customer);
         });
+        console.log(db);
       };
-
-      console.log('Create weatherDB in indexedDB');
     };
 
-    dbReq.onsuccess = (event) => {
-      db = (event.target as IDBOpenDBRequest).result;
-    };
-    dbReq.onerror = (event) => {
-      // alert('error opening database ' + (event.target as IDBOpenDBRequest).errorCod);
+  }
+
+  addIndexedDB() {
+    this.dbReq.onsuccess = (event) => {
+      const db = (event.target as IDBOpenDBRequest).result;
+
+      const customerData = [
+        {ssn: '5545-55-5555', name: 'Donnda', age: 32, email: 'tamas76@home.org'}
+      ];
+
+      // open a read/write db transaction, ready for adding the data
+      const transaction = db.transaction(['customers'], 'readwrite');
+
+      // create an object store on the transaction
+      const objectStore = transaction.objectStore('customers');
+      // add our newItem object to the object store
+      const objectStoreRequest = objectStore.add(customerData[0]);
+
+      objectStoreRequest.onsuccess = () => {
+        // report the success of the request (this does not mean the item
+        // has been stored successfully in the DB - for that you need transaction.onsuccess)
+        console.log(db);
+      };
     };
   }
 
