@@ -37,15 +37,17 @@ export class SearchComponent implements OnInit {
       .searchCountry(this.query)
       .subscribe((res: any) => {
         this.renderResults(res);
+      }, () => {
+        console.log('Ilyen nevű város nem található az adatbázisban');
       });
   }
 
   renderResults(res: any): void {
     this.results = null;
     console.log(res);
-    /*if (res && res.city) {
-      this.results = res.city;
-    }*/
+    if (res && res.name) {
+      // this.results = res.city;
+    }
   }
 
   submit(queryParam: string): void {
