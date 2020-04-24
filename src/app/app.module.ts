@@ -20,6 +20,7 @@ import {UserService} from './shared/user.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {LocalStorageService} from './shared/local-storage.service';
 import {WeatherMapService} from './shared/weather-map.service';
+import {IndexedDBService} from './shared/indexed-db.service';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {WeatherMapService} from './shared/weather-map.service';
     LoggedInGuard,
     LocalStorageService,
     WeatherMapService,
+    IndexedDBService,
     // {provide: 'API_URL', useValue: 'http://localhost:1234/'}
     {provide: 'API_URL', useValue: './'}
   ],
