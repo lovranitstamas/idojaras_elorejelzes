@@ -13,7 +13,6 @@ import {HomeComponent} from './home/home.component';
 import {WheatherComponent} from './wheather/wheather.component';
 import {LoginComponent} from './user/login/login.component';
 import {ProfileComponent} from './user/profile/profile.component';
-import {SearchComponent} from './search/search.component';
 
 import {LoggedInGuard} from './shared/logged-in.guard';
 import {UserService} from './shared/user.service';
@@ -29,7 +28,6 @@ import {IndexedDBService} from './shared/indexed-db.service';
     WheatherComponent,
     LoginComponent,
     ProfileComponent,
-    SearchComponent,
     ...AppRoutingModule.routableComponents
   ],
   imports: [
