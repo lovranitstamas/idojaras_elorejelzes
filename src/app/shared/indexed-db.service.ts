@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable({
@@ -8,35 +8,50 @@ export class IndexedDBService {
 
   private _jsonURL = './assets/data/city.list.json';
 
-  constructor(private _http: HttpClient) { }
+  onProcessDB: boolean;
+
+  constructor(private _http: HttpClient) {
+  }
 
   createIndexedDB() {
-
+    this.onProcessDB = true;
     // let apiURL = `${this.apiRoot}?term=${term}&media=music&limit=20`;
-    this._http.get(this._jsonURL).subscribe((data) => {
+    return new Promise((resolve, reject) => {
+      this._http.get(this._jsonURL).subscribe((data) => {
 
-      console.log(Object.values(data));
-      const dbReq = indexedDB.open('weatherDB', 1);
+        const dbReq = indexedDB.open('weatherDB', 1);
 
-      dbReq.onupgradeneeded = (event) => {
-        // Set the db variable to our database so we can use it!
-        const db = (event.target as IDBOpenDBRequest).result;
+        dbReq.onupgradeneeded = (event) => {
+          // Set the db variable to our database so we can use it!
+          const db = (event.target as IDBOpenDBRequest).result;
 
-        // Create an object store named notes. Object stores
-        // in databases are where data are stored.
-        const objectStore = db.createObjectStore('cities', {keyPath: 'id'});
+          // Create an object store named notes. Object stores
+          // in databases are where data are stored.
+          const objectStore = db.createObjectStore('cities', {keyPath: 'id'});
 
-        // Use transaction oncomplete to make sure the objectStore creation is
-        // finished before adding data into it.
-        objectStore.transaction.oncomplete = () => {
-          // Store values in the newly created objectStore.
-          const customerObjectStore = db.transaction('cities', 'readwrite').objectStore('cities');
-          Object.values(data).forEach((city) => {
-            customerObjectStore.add(city);
-          });
-          console.log(db);
+          // Use transaction oncomplete to make sure the objectStore creation is
+          // finished before adding data into it.
+          objectStore.transaction.oncomplete = () => {
+            // Store values in the newly created objectStore.
+            const customerObjectStore = db.transaction('cities', 'readwrite').objectStore('cities');
+            Object.values(data).forEach((city) => {
+              customerObjectStore.add(city);
+            });
+
+            this.onProcessDB = false;
+            resolve(this.onProcessDB);
+          };
         };
-      };
+
+        dbReq.onsuccess = () => {
+          this.onProcessDB = false;
+          resolve(this.onProcessDB);
+        };
+
+        dbReq.onerror = (event) => {
+          reject(event);
+        };
+      });
     });
   }
 

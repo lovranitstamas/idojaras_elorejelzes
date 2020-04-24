@@ -23,7 +23,8 @@ import {LoadingSpinnerComponent} from './loading-spinner/loading-spinner.compone
   exports: [
     FooterComponent,
     NavbarComponent,
-    ModalComponent
+    ModalComponent,
+    LoadingSpinnerComponent
   ]
 })
 export class CoreModule {

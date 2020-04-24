@@ -3,6 +3,7 @@ import {UserService} from '../../shared/user.service';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserModel} from '../../shared/user-model';
+import {IndexedDBService} from '../../shared/indexed-db.service';
 
 /**
  * Our custom validator
@@ -27,6 +28,7 @@ function usernameValidator(control: FormControl): { [s: string]: boolean } {
 })
 export class LoginComponent implements OnInit {
   onProcess = false;
+  onProcessDB = false;
   loginForm: FormGroup;
   password: any;
   private _user: UserModel;
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(private _userService: UserService,
+              private _indexedDBService: IndexedDBService,
               private _router: Router,
               fb: FormBuilder) {
     this.loginForm = fb.group({
@@ -54,9 +57,15 @@ export class LoginComponent implements OnInit {
     this.onProcess = true;
 
     if (form.valid) {
+      this.onProcessDB = true;
       if (this._userService.loginFromLocaleStorage(form)) {
-        this.makeUserInstance(form);
-        this._router.navigate(['/wheather']);
+        this._indexedDBService.createIndexedDB().then((res) => {
+          if (res === false) {
+            this.makeUserInstance(form);
+            this.onProcessDB = false;
+            this._router.navigate(['/weather']);
+          }
+        });
       } else {
         // API
 
@@ -64,8 +73,13 @@ export class LoginComponent implements OnInit {
         // Save the user in the local storage
         this._userService.saveUserInLocalStorage(form);
 
-        this.makeUserInstance(form);
-        this._router.navigate(['/wheather']);
+        this._indexedDBService.createIndexedDB().then((res) => {
+          if (res === false) {
+            this.makeUserInstance(form);
+            this.onProcessDB = false;
+            this._router.navigate(['/weather']);
+          }
+        });
         // subscribe error function
 
       }
