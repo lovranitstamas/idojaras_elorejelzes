@@ -6,12 +6,14 @@ import {FooterComponent} from './footer/footer.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {ModalComponent} from './modal/modal.component';
+import {LoadingSpinnerComponent} from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
     FooterComponent,
     NavbarComponent,
-    ModalComponent
+    ModalComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     CommonModule,
