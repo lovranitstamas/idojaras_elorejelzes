@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WeatherMapService} from '../shared/weather-map.service';
 import {HttpClient} from '@angular/common/http';
+import {IndexedDBService} from '../shared/indexed-db.service';
 
 @Component({
   selector: 'app-search',
@@ -12,11 +13,15 @@ export class SearchComponent implements OnInit {
 
   query: string;
   results: any;
+  warningMessage = '';
+  @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
+  @Output() tempCityId: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private _weather: WeatherMapService,
               private _router: Router,
               private _route: ActivatedRoute,
-              private _http: HttpClient) {
+              private _http: HttpClient,
+              private _indexedDBService: IndexedDBService) {
     this._route
       .queryParams
       .subscribe(params => {
@@ -25,7 +30,8 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.search();
+    // API Backend Call
+    // this.search();
   }
 
   search(): void {
@@ -42,6 +48,16 @@ export class SearchComponent implements OnInit {
       });
   }
 
+  searchFromLocalDisk(queryParam: string) {
+    this._indexedDBService.findIndexedDB(queryParam).then(res => {
+      this.enableSave.emit(true);
+      this.tempCityId.emit(res as number);
+    }).catch(err => {
+      this.warningMessage = 'Nincs találat';
+      console.warn(err);
+    });
+  }
+
   renderResults(res: any): void {
     this.results = null;
     console.log(res);
@@ -51,6 +67,16 @@ export class SearchComponent implements OnInit {
   }
 
   submit(queryParam: string): void {
-    this._router.navigate(['weather'], {queryParams: {query: queryParam}}).then(() => this.search());
+    this.warningMessage = '';
+    this.enableSave.emit(false);
+
+    if (queryParam.trim().length) {
+      this.searchFromLocalDisk(queryParam.trim());
+    } else {
+      this.warningMessage = 'Min 1. karakter';
+    }
+
+    // API Backend Call
+    // this._router.navigate(['weather'], {queryParams: {query: queryParam}}).then(() => this.search());
   }
 }

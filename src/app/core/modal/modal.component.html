@@ -6,10 +6,10 @@
     </button>
   </div>
   <div class="modal-body">
-      <app-search></app-search>
+      <app-search (tempCityId)="setTempCityId($event)" (enableSave)="enableSaveCity($event)"></app-search>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Hozzáadás</button>
+    <button type="button" class="btn btn-primary" [disabled]="!enable" (click)="modal.close('Save click')">Hozzáadás</button>
   </div>
 </ng-template>
 

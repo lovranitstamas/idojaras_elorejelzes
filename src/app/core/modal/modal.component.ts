@@ -10,6 +10,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class ModalComponent {
   @ViewChild('content') content: any;
   closeResult = '';
+  enable = false;
 
   constructor(private modalService: NgbModal) {
   }
@@ -39,4 +40,12 @@ export class ModalComponent {
     }
   }
 
+  setTempCityId(event) {
+    console.log('CityId: ' + event);
+  }
+
+  enableSaveCity(event) {
+    console.log('Enable save: ' + event);
+    event ? this.enable = true : this.enable = false;
+  }
 }

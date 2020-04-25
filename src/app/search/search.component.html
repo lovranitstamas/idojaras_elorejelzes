@@ -3,6 +3,7 @@
     <input type="text" #newquery
            [value]="query"
            (keydown.enter)="submit(newquery.value)">
-    <button (click)="submit(newquery.value)">Search</button>
+    <button (click)="submit(newquery.value)">Keresés</button>
   </div>
+  <span class="error">{{this.warningMessage}}</span>
 </div>

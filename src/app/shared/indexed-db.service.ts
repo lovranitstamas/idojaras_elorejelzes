@@ -27,7 +27,9 @@ export class IndexedDBService {
 
           // Create an object store named notes. Object stores
           // in databases are where data are stored.
-          const objectStore = db.createObjectStore('cities', {keyPath: 'id'});
+          const objectStore = db.createObjectStore('cities', {keyPath: ['id']});
+
+          objectStore.createIndex('name', 'name', {unique: false});
 
           // Use transaction oncomplete to make sure the objectStore creation is
           // finished before adding data into it.
@@ -52,6 +54,43 @@ export class IndexedDBService {
           reject(event);
         };
       });
+    });
+  }
+
+  findIndexedDB(city) {
+    return new Promise((resolve, reject) => {
+      const dbReq = indexedDB.open('weatherDB', 1);
+
+      dbReq.onsuccess = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+
+        // open a read/write db transaction, ready for adding the data
+        const transaction = db.transaction(['cities'], 'readwrite');
+
+        // report on the success of the transaction completing, when everything is done
+        transaction.oncomplete = () => {
+          console.log('Transaction completed');
+        };
+
+        transaction.onerror = () => {
+          console.log(transaction.error);
+          reject(event);
+        };
+
+        // create an object store on the transaction
+        const objectStore = transaction.objectStore('cities').index('name');
+
+        // Make a request to get a record by key from the object store
+        const objectStoreRequest = objectStore.get(city);
+
+        objectStoreRequest.onsuccess = () => {
+          if (objectStoreRequest.result) {
+            const result = objectStoreRequest.result.id;
+            resolve(result);
+          }
+          reject(event);
+        };
+      };
     });
   }
 
