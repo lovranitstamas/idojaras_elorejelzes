@@ -6,7 +6,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <app-search (tempCityId)="setTempCityId($event)" (enableSave)="enableSaveCity($event)"></app-search>
+    <app-search (tempCity)="setTempCity($event)" (enableSave)="enableSaveCity($event)"></app-search>
     <p *ngIf="cityIsStored" class="text-danger font-weight-bold">A helység már Önhöz van rendelve</p>
   </div>
   <div class="modal-footer">

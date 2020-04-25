@@ -16,7 +16,7 @@ export class ModalComponent implements OnInit {
   closeResult = '';
   enableSave = false;
   cityIsStored = false;
-  private _tempCityId: number;
+  private _tempCity: any;
   @Output() updateTab: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private modalService: NgbModal,
@@ -41,16 +41,16 @@ export class ModalComponent implements OnInit {
       this.closeResult = `Closed with: ${result}`;
 
       // if the user has not got the selected country
-      const arrayCity: number[] = this._user.cityFunction;
+      const arrayCity: any[] = this._user.cityFunction;
 
       if (arrayCity) {
-        const found = arrayCity.find(element => element === this._tempCityId);
+        const found = arrayCity.find(element => element.id === this._tempCity.id);
         if (!found) {
-          arrayCity.push(this._tempCityId);
+          arrayCity.push(this._tempCity);
           this._user.cityFunction = arrayCity;
         }
       } else {
-        arrayCity.push(this._tempCityId);
+        arrayCity.push(this._tempCity);
         this._user.cityFunction = arrayCity;
       }
 
@@ -98,15 +98,15 @@ export class ModalComponent implements OnInit {
     }
   }
 
-  setTempCityId(event) {
-    this._tempCityId = event;
+  setTempCity(event) {
+    this._tempCity = event;
     this.cityIsStored = false;
 
     // if the user has not got the selected country
-    const arrayCity: number[] = this._user.cityFunction;
+    const arrayCity: any [] = this._user.cityFunction;
 
     if (arrayCity) {
-      const found = arrayCity.find(element => element === this._tempCityId);
+      const found = arrayCity.find(element => element.id === this._tempCity.id);
       if (found) {
         this.enableSave = false;
         this.cityIsStored = true;

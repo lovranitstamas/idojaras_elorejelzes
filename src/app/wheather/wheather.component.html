@@ -6,10 +6,13 @@
         <app-modal #myModal (updateTab)="updateTabContent()"></app-modal>
 
         <ngb-tabset [destroyOnHide]="false" (tabChange)="onTabChange($event)">
-          <ngb-tab title="{{country}}" *ngFor="let country of countries; let i=index">
+          <ngb-tab title="{{country.name}}" *ngFor="let country of countries; let i=index">
             <ng-template ngbTabContent>
-              <div class="container my-5">
-                Adat
+              <div class="container my-5 text-center">
+                <h4 class="text-left">Felhasználó: {{user.usernameFunction}}</h4>
+
+                <h2>Időjárási adatok</h2>
+                <h3>Város: {{country.name}}</h3>
               </div>
             </ng-template>
           </ngb-tab>

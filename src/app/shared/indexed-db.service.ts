@@ -87,7 +87,7 @@ export class IndexedDBService {
 
         objectStoreRequest.onsuccess = () => {
           if (objectStoreRequest.result) {
-            const result = objectStoreRequest.result.id;
+            const result = objectStoreRequest.result;
             resolve(result);
           }
           reject(event);

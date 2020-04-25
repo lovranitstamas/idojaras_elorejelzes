@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
   warningMessage = '';
   detectCity = false;
   @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
-  @Output() tempCityId: EventEmitter<number> = new EventEmitter<number>();
+  @Output() tempCity: EventEmitter<any> = new EventEmitter();
   @HostListener('input')
   oninput() {
     this.enableSave.emit(false);
@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit {
   searchFromLocalDisk(queryParam: string) {
     this._indexedDBService.findIndexedDB(queryParam).then(res => {
       this.enableSave.emit(true);
-      this.tempCityId.emit(res as number);
+      this.tempCity.emit(res);
       this.detectCity = true;
     }).catch(err => {
       this.warningMessage = 'Nincs találat';

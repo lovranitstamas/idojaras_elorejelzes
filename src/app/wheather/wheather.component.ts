@@ -11,18 +11,22 @@ import {ModalComponent} from '../core/modal/modal.component';
 })
 export class WheatherComponent implements OnInit {
   user$: Observable<UserModel>;
-  countries = [1];
+  countries: any = [];
   @ViewChild('myModal') modal: ModalComponent;
+  private _user: UserModel;
 
   constructor(private _userService: UserService) {
   }
 
   ngOnInit(): void {
     this.user$ = this._userService.getCurrentUser();
-    if (!this.countries.length) {
-      // console.log('modal');
-      this.modal.open();
-    }
+
+    this._userService.getCurrentUser().subscribe(user => {
+      this._user = user;
+
+      this.refreshTab();
+    });
+
   }
 
   onTabChange($event) {
@@ -33,6 +37,11 @@ export class WheatherComponent implements OnInit {
   }
 
   updateTabContent() {
-    console.log('Update tab');
+    this.refreshTab();
+  }
+
+  refreshTab() {
+    this.countries = this._user.cityFunction;
+
   }
 }
