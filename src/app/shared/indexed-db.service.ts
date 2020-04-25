@@ -7,8 +7,8 @@ import {HttpClient} from '@angular/common/http';
 export class IndexedDBService {
 
   // private _jsonURL = './assets/data/city.list.json';
-  // private _jsonURL = './assets/data/example.json';
-  private _jsonURL = './assets/data/weather.json';
+  private _jsonURL = './assets/data/example.json';
+  // private _jsonURL = './assets/data/weather.json';
 
   onProcessDB: boolean;
 

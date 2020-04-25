@@ -26,8 +26,15 @@
               <div class="container my-5 text-center">
                 <h4 class="text-left">Felhasználó: {{user.usernameFunction}}</h4>
 
+                <p class="text-right">
+                  <button class="btn btn-danger btn-lg" (click)="deleteCity(country.city.id)">Törlés a listából</button>
+                </p>
+
                 <h2>Időjárási adatok</h2>
+                <hr>
                 <h3>Város: {{country.city.name}}</h3>
+
+                <hr>
 
                 <h4>Hőmérséklet: {{country.main.temp}}</h4>
                 <h4>Páratartalom: {{country.main.humidity}}</h4>

@@ -109,8 +109,8 @@ export class LoginComponent implements OnInit {
 
           this._userService.setUserToActive(this._user);
 
-          console.log('Instance: ', this._user);
-          console.log('Localstorage: ', this._localStorageService.getOnLocalStorage());
+          // console.log('Instance: ', this._user);
+          // console.log('Localstorage: ', this._localStorageService.getOnLocalStorage());
 
           return true;
         } else {

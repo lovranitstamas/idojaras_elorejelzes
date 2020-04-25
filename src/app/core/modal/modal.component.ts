@@ -54,8 +54,7 @@ export class ModalComponent implements OnInit {
         this._user.cityFunction = arrayCity;
       }
 
-      // create m. user object with password
-      // TODO except API backend call
+      // TODO at API backend call
       const theUser = this._localStorageService.getOnLocalStorage().find(user => {
         return user.username === this._user.usernameFunction;
       });
