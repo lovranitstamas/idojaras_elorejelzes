@@ -6,4 +6,6 @@
     <button (click)="submit(newquery.value)">Keresés</button>
   </div>
   <span class="error">{{this.warningMessage}}</span>
+  <br>
+  <span class="text-success font-weight-bold" *ngIf="detectCity">A keresett helység megtalálható</span>
 </div>

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {UserService} from '../../shared/user.service';
@@ -14,9 +14,10 @@ export class ModalComponent implements OnInit {
   @ViewChild('content') content: any;
   private _user: UserModel;
   closeResult = '';
-  enable = false;
+  enableSave = false;
+  cityIsStored = false;
   private _tempCityId: number;
-
+  @Output() updateTab: EventEmitter<boolean> = new EventEmitter();
 
   constructor(private modalService: NgbModal,
               private _userService: UserService,
@@ -76,6 +77,12 @@ export class ModalComponent implements OnInit {
       // update local storage
       this._localStorageService.updateLocalStorage(allUsers);
 
+      // disable save button
+      this.enableSave = false;
+
+      // refresh tab
+      this.updateTab.emit(true);
+
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -93,11 +100,27 @@ export class ModalComponent implements OnInit {
 
   setTempCityId(event) {
     this._tempCityId = event;
-    console.log('CityId: ' + event);
+    this.cityIsStored = false;
+
+    // if the user has not got the selected country
+    const arrayCity: number[] = this._user.cityFunction;
+
+    if (arrayCity) {
+      const found = arrayCity.find(element => element === this._tempCityId);
+      if (found) {
+        this.enableSave = false;
+        this.cityIsStored = true;
+        setTimeout(() => {
+          this.cityIsStored = false;
+        }, 5000);
+      }
+    }
+
+    // console.log('CityId: ' + event);
   }
 
   enableSaveCity(event) {
-    console.log('Enable save: ' + event);
-    event ? this.enable = true : this.enable = false;
+    // console.log('Enable save: ' + event);
+    event ? this.enableSave = true : this.enableSave = false;
   }
 }

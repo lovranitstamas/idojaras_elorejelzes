@@ -3,7 +3,7 @@
     <div class="col my-5">
       <ng-container *ngIf="(user$ | async) as user; else loading">
 
-        <app-modal #myModal></app-modal>
+        <app-modal #myModal (updateTab)="updateTabContent()"></app-modal>
 
         <ngb-tabset [destroyOnHide]="false" (tabChange)="onTabChange($event)">
           <ngb-tab title="{{country}}" *ngFor="let country of countries; let i=index">

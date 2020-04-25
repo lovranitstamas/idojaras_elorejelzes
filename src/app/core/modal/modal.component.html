@@ -6,10 +6,13 @@
     </button>
   </div>
   <div class="modal-body">
-      <app-search (tempCityId)="setTempCityId($event)" (enableSave)="enableSaveCity($event)"></app-search>
+    <app-search (tempCityId)="setTempCityId($event)" (enableSave)="enableSaveCity($event)"></app-search>
+    <p *ngIf="cityIsStored" class="text-danger font-weight-bold">A helység már Önhöz van rendelve</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" [disabled]="!enable" (click)="modal.close('Save click')">Hozzáadás</button>
+    <button type="button" class="btn btn-primary" [disabled]="!enableSave || cityIsStored"
+            (click)="modal.close('Save click')">Hozzáadás
+    </button>
   </div>
 </ng-template>
 

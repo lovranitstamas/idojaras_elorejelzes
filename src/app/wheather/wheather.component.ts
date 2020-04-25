@@ -20,16 +20,19 @@ export class WheatherComponent implements OnInit {
   ngOnInit(): void {
     this.user$ = this._userService.getCurrentUser();
     if (!this.countries.length) {
-      console.log('modal');
+      // console.log('modal');
       this.modal.open();
     }
   }
 
   onTabChange($event) {
     if ($event.nextId === 'modal') {
-      console.log('modal');
+      // console.log('modal');
       this.modal.open();
     }
   }
 
+  updateTabContent() {
+    console.log('Update tab');
+  }
 }

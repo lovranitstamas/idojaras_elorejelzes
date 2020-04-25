@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WeatherMapService} from '../shared/weather-map.service';
 import {HttpClient} from '@angular/common/http';
@@ -14,8 +14,14 @@ export class SearchComponent implements OnInit {
   query: string;
   results: any;
   warningMessage = '';
+  detectCity = false;
   @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
   @Output() tempCityId: EventEmitter<number> = new EventEmitter<number>();
+  @HostListener('input')
+  oninput() {
+    this.enableSave.emit(false);
+    this.detectCity = false;
+  }
 
   constructor(private _weather: WeatherMapService,
               private _router: Router,
@@ -53,6 +59,7 @@ export class SearchComponent implements OnInit {
     this._indexedDBService.findIndexedDB(queryParam).then(res => {
       this.enableSave.emit(true);
       this.tempCityId.emit(res as number);
+      this.detectCity = true;
     }).catch(err => {
       this.warningMessage = 'Nincs találat';
       console.warn(err);
@@ -69,6 +76,7 @@ export class SearchComponent implements OnInit {
 
   submit(queryParam: string): void {
     this.warningMessage = '';
+    this.detectCity = false;
     this.enableSave.emit(false);
 
     if (queryParam.trim().length) {

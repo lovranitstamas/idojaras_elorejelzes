@@ -6,7 +6,9 @@ import {HttpClient} from '@angular/common/http';
 })
 export class IndexedDBService {
 
-  private _jsonURL = './assets/data/city.list.json';
+  // private _jsonURL = './assets/data/city.list.json';
+
+  private _jsonURL = './assets/data/example.json';
 
   onProcessDB: boolean;
 
@@ -37,7 +39,7 @@ export class IndexedDBService {
             // Store values in the newly created objectStore.
             const customerObjectStore = db.transaction('cities', 'readwrite').objectStore('cities');
             Object.values(data).forEach((city) => {
-              customerObjectStore.add(city);
+              customerObjectStore.add(city.city);
             });
 
             this.onProcessDB = false;
