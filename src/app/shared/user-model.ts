@@ -1,6 +1,6 @@
 export class UserModel {
   private _username: string;
-  private _city: Array<any>;
+  private _city: any;
 
   // name
   get usernameFunction(): string {
@@ -12,11 +12,11 @@ export class UserModel {
   }
 
   // city
-  get cityFunction(): Array<any> {
+  get cityFunction(): any {
     return this._city;
   }
 
-  set cityFunction(city: Array<any>) {
+  set cityFunction(city: any) {
     this._city = city;
   }
 

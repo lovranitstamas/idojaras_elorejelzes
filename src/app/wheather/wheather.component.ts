@@ -19,11 +19,11 @@ export class WheatherComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.user$ = this._userService.getCurrentUser();
 
     this._userService.getCurrentUser().subscribe(user => {
       this._user = user;
-
       this.refreshTab();
     });
 
@@ -31,7 +31,6 @@ export class WheatherComponent implements OnInit {
 
   onTabChange($event) {
     if ($event.nextId === 'modal') {
-      // console.log('modal');
       this.modal.open();
     }
   }
@@ -42,6 +41,5 @@ export class WheatherComponent implements OnInit {
 
   refreshTab() {
     this.countries = this._user.cityFunction;
-
   }
 }

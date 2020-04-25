@@ -44,7 +44,7 @@ export class ModalComponent implements OnInit {
       const arrayCity: any[] = this._user.cityFunction;
 
       if (arrayCity) {
-        const found = arrayCity.find(element => element.id === this._tempCity.id);
+        const found = arrayCity.find(element => element.city.id === this._tempCity.city.id);
         if (!found) {
           arrayCity.push(this._tempCity);
           this._user.cityFunction = arrayCity;
@@ -106,7 +106,7 @@ export class ModalComponent implements OnInit {
     const arrayCity: any [] = this._user.cityFunction;
 
     if (arrayCity) {
-      const found = arrayCity.find(element => element.id === this._tempCity.id);
+      const found = arrayCity.find(element => element.city.id === this._tempCity.city.id);
       if (found) {
         this.enableSave = false;
         this.cityIsStored = true;
