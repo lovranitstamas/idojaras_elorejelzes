@@ -15,16 +15,16 @@ export class UserService {
   user: UserModel;
 
   constructor(private _router: Router,
-              @Inject('API_URL') private baseUrl: string,
-              private localStorageService: LocalStorageService,
+              @Inject('API_URL') private _baseUrl: string,
+              private _localStorageService: LocalStorageService,
               private _httpClient: HttpClient,
   ) {
     this.isLoggedIn$.next(false);
   }
 
   loginFromLocaleStorage(form) {
-    if (this.localStorageService.getOnLocalStorage()) {
-      return this.localStorageService.getOnLocalStorage().find((res) => {
+    if (this._localStorageService.getOnLocalStorage()) {
+      return this._localStorageService.getOnLocalStorage().find((res) => {
         return res.username === 'tomika' && res.password === '66';
         // return res.username === form.value.username && res.password === form.value.password;
       });
@@ -32,13 +32,13 @@ export class UserService {
   }
 
   saveUserInLocalStorage(form) {
-    this.localStorageService.storeOnLocalStorage(form.value);
+    this._localStorageService.storeOnLocalStorage(form.value);
     return true;
   }
 
   loginFromBackend(form): Observable<any> {
     // API backend
-    return this._httpClient.post<any>(`${this.baseUrl}/login`, {data: form})
+    return this._httpClient.post<any>(`${this._baseUrl}/login`, {data: form})
       .pipe(map((user) => {
           return user;
         }),

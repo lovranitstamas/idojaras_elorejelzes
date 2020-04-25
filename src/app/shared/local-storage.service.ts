@@ -27,4 +27,9 @@ export class LocalStorageService {
     // console.log(this._storage.get(STORAGE_KEY) || 'LocaL storage is empty');
     return this._storage.get(STORAGE_KEY);
   }
+
+  public updateLocalStorage(currentUserList){
+    this._storage.clear();
+    this._storage.set(STORAGE_KEY, currentUserList);
+  }
 }
