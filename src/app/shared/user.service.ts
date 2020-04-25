@@ -22,17 +22,8 @@ export class UserService {
     this.isLoggedIn$.next(false);
   }
 
-  loginFromLocaleStorage(form) {
-    if (this._localStorageService.getOnLocalStorage()) {
-      return this._localStorageService.getOnLocalStorage().find((res) => {
-        return res.username === 'tomika' && res.password === '66';
-        // return res.username === form.value.username && res.password === form.value.password;
-      });
-    }
-  }
-
-  saveUserInLocalStorage(form) {
-    this._localStorageService.storeOnLocalStorage(form.value);
+  saveUserInLocalStorage(theUser) {
+    this._localStorageService.storeOnLocalStorage(theUser);
     return true;
   }
 

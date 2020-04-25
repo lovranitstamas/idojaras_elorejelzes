@@ -30,10 +30,11 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // API Backend Call
+    // TODO test call in backend case
     // this.search();
   }
 
+  // TODO test call in backend case
   search(): void {
     if (!this.query) {
       return;
@@ -58,11 +59,11 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  // TODO test call in backend case
   renderResults(res: any): void {
     this.results = null;
     console.log(res);
     if (res && res.name) {
-      // this.results = res.city;
     }
   }
 
@@ -76,7 +77,7 @@ export class SearchComponent implements OnInit {
       this.warningMessage = 'Min 1. karakter';
     }
 
-    // API Backend Call
+    // TODO test call in backend case
     // this._router.navigate(['weather'], {queryParams: {query: queryParam}}).then(() => this.search());
   }
 }

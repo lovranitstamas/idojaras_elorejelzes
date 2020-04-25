@@ -19,14 +19,11 @@
         <li class="nav-item">
           <a class="nav-link font-weight-bold" routerLink="/user/login" (click)="clickOnRouterLink()">BELÉPÉS</a>
         </li>
+      </ng-container>
+      <ng-template #loggedInBlock>
         <li class="nav-item">
           <a class="nav-link font-weight-bold" routerLink="/weather" (click)="clickOnRouterLink()">IDŐJÁRÁS</a>
         </li>
-      </ng-container>
-      <ng-template #loggedInBlock>
-        <!--<li class="nav-item">
-          <a class="nav-link font-weight-bold" routerLink="/weather" (click)="clickOnRouterLink()">IDŐJÁRÁS</a>
-        </li>-->
         <!--<li class="nav-item">
           <a class="nav-link font-weight-bold" routerLink="/user" (click)="clickOnRouterLink()">PROFIL</a>
         </li>-->

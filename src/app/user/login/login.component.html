@@ -12,7 +12,7 @@
               <div class="form-group font-weight-bold text-center">
                 <ngb-alert dismissible="true"
                            type="danger" *ngIf="(loginForm.get('username').hasError('required') ||
-                      password.hasError('required')) && onProcess"
+                      password.hasError('required')) && onProcess && passwordWrong==''"
                            (close)="closeAlert()">Hiányos adatbevitel
                 </ngb-alert>
                 <ngb-alert dismissible="true"
@@ -41,6 +41,7 @@
                        placeholder="Jelszó"
                        [formControl]="password">
               </div>
+              <span class="error" *ngIf="passwordWrong!=''">{{this.passwordWrong}}</span>
 
               <button class="btn btn-lg btn-block btn-primary mt-3"
                       type="submit"><span>Belépés</span></button>

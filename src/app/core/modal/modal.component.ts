@@ -12,7 +12,7 @@ import {LocalStorageService} from '../../shared/local-storage.service';
 })
 export class ModalComponent implements OnInit {
   @ViewChild('content') content: any;
-  user: UserModel;
+  private _user: UserModel;
   closeResult = '';
   enable = false;
   private _tempCityId: number;
@@ -25,7 +25,7 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this._userService.getCurrentUser().subscribe(user => {
-      this.user = user;
+      this._user = user;
     });
   }
 
@@ -39,31 +39,42 @@ export class ModalComponent implements OnInit {
     this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
-      // assign the country to user (in the case of new country)
-      const theUser = this._localStorageService.getOnLocalStorage().find(user => {
-        return user.username === this.user.usernameFunction;
-      });
+      // if the user has not got the selected country
+      const arrayCity: number[] = this._user.cityFunction;
 
-      // if the user has not selected country
-      if (!theUser.city) {
-        const city = {city: []};
-        const theNewUser = Object.assign(theUser, city);
-        theNewUser.city.push(this._tempCityId);
-        console.log(theNewUser);
-        // this._localStorageService.storeCountryId(theNewUser);
+      if (arrayCity) {
+        const found = arrayCity.find(element => element === this._tempCityId);
+        if (!found) {
+          arrayCity.push(this._tempCityId);
+          this._user.cityFunction = arrayCity;
+        }
+      } else {
+        arrayCity.push(this._tempCityId);
+        this._user.cityFunction = arrayCity;
       }
 
-      // get the other users
-      const otherUsers = [];
+      // create m. user object with password
+      // TODO except API backend call
+      const theUser = this._localStorageService.getOnLocalStorage().find(user => {
+        return user.username === this._user.usernameFunction;
+      });
+      const modifiedUser = {
+        username: this._user.usernameFunction,
+        password: theUser.password,
+        city: arrayCity
+      };
+
+      // merge the user arrays
+      const allUsers = [];
       this._localStorageService.getOnLocalStorage().map(user => {
-        if (user.username !== this.user.usernameFunction) {
-          otherUsers.push(user);
+        if (user.username !== this._user.usernameFunction) {
+          allUsers.push(user);
         }
       });
-      otherUsers.push(theUser);
+      allUsers.push(modifiedUser);
 
       // update local storage
-      this._localStorageService.updateLocalStorage(otherUsers);
+      this._localStorageService.updateLocalStorage(allUsers);
 
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
