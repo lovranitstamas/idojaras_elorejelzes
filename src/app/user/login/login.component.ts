@@ -145,8 +145,8 @@ export class LoginComponent implements OnInit {
     // Save the user in the local storage
     this._userService.saveUserInLocalStorage(dLUserO);
 
-    console.log('Instance: ', this._user);
-    console.log('Localstorage: ', this._localStorageService.getOnLocalStorage());
+    // console.log('Instance: ', this._user);
+    // console.log('Localstorage: ', this._localStorageService.getOnLocalStorage());
     this._userService.setUserToActive(this._user);
   }
 
