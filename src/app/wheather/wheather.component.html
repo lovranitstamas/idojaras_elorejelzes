@@ -6,7 +6,7 @@
         <app-modal #myModal (updateTab)="updateTabContent()"></app-modal>
 
         <ngb-tabset [destroyOnHide]="false" (tabChange)="onTabChange($event)">
-          <ngb-tab title="Útmutató" *ngIf="!countries.length;">
+          <ngb-tab title="Útmutató" *ngIf="!objects.length;">
             <ng-template ngbTabContent>
               <h1 class="mt-5">Üdvözöllek a honlapon</h1>
               <div class="container">
@@ -21,25 +21,25 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="{{country.city.name}}" *ngFor="let country of countries;">
+          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects;">
             <ng-template ngbTabContent>
               <div class="container my-5 text-center">
                 <h4 class="text-left">Felhasználó: {{user.usernameFunction}}</h4>
 
                 <p class="text-right">
-                  <button class="btn btn-danger btn-lg" (click)="deleteCity(country.city.id)">Törlés a listából</button>
+                  <button class="btn btn-danger btn-lg" (click)="deleteCity(object.city.id)">Törlés a listából</button>
                 </p>
 
                 <h2>Időjárási adatok</h2>
                 <hr>
-                <h3>Város: {{country.city.name}}</h3>
+                <h3>Város: {{object.city.name}}</h3>
 
                 <hr>
 
-                <h4>Hőmérséklet: {{country.main.temp}}</h4>
-                <h4>Páratartalom: {{country.main.humidity}}</h4>
-                <h4>Légnyomás: {{country.main.pressure}}</h4>
-                <h4>Szélerősség-irány: {{country.wind.deg}}</h4>
+                <h4>Hőmérséklet: {{object.data[0].temp.day}}</h4>
+                <h4>Páratartalom: {{object.data[0].humidity}}</h4>
+                <h4>Légnyomás: {{object.data[0].pressure}}</h4>
+                <h4>Szélerősség-irány: {{object.data[0].speed}}</h4>
 
               </div>
             </ng-template>

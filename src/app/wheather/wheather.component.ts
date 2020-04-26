@@ -12,7 +12,7 @@ import {LocalStorageService} from '../shared/local-storage.service';
 })
 export class WheatherComponent implements OnInit, OnDestroy {
   user$: Observable<UserModel>;
-  countries: any = [];
+  objects: any = [];
   @ViewChild('myModal') modal: ModalComponent;
   private _user: UserModel;
   private _subscription: Subscription;
@@ -46,7 +46,7 @@ export class WheatherComponent implements OnInit, OnDestroy {
   }
 
   refreshTab() {
-    this.countries = this._user.cityFunction;
+    this.objects = this._user.cityFunction;
   }
 
   deleteCity(id: number) {
