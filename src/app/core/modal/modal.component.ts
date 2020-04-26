@@ -40,9 +40,11 @@ export class ModalComponent implements OnInit {
     this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
-      // if the user has not got the selected country
+      // get the current city list from model
       const arrayCity: any[] = this._user.cityFunction;
 
+      // if not empty detect the selected city is in it or no
+      // set the model
       if (arrayCity) {
         const found = arrayCity.find(element => element.city.id === this._tempCity.city.id);
         if (!found) {
@@ -54,17 +56,20 @@ export class ModalComponent implements OnInit {
         this._user.cityFunction = arrayCity;
       }
 
+      // find the user in storage
       // TODO at API backend call
       const theUser = this._localStorageService.getOnLocalStorage().find(user => {
         return user.username === this._user.usernameFunction;
       });
+
+      // store the modified user in a variable
       const modifiedUser = {
         username: this._user.usernameFunction,
         password: theUser.password,
         city: arrayCity
       };
 
-      // merge the user arrays
+      // push the other users in an array (from storage) with the modified user
       const allUsers = [];
       this._localStorageService.getOnLocalStorage().map(user => {
         if (user.username !== this._user.usernameFunction) {
@@ -73,7 +78,7 @@ export class ModalComponent implements OnInit {
       });
       allUsers.push(modifiedUser);
 
-      // update local storage
+      // update storage
       this._localStorageService.updateLocalStorage(allUsers);
 
       // disable save button
@@ -122,4 +127,5 @@ export class ModalComponent implements OnInit {
     // console.log('Enable save: ' + event);
     event ? this.enableSave = true : this.enableSave = false;
   }
+
 }

@@ -41,6 +41,9 @@
                 <h4>Légnyomás: {{object.data[0].pressure}}</h4>
                 <h4>Szélerősség-irány: {{object.data[0].speed}}</h4>
 
+                <h3>5 napos előrejelzés</h3>
+                <ngx-line-chart [dataSets]="arrayForecast" [xLabelFunction]="formatXAxisValue.bind(this)"></ngx-line-chart>
+
               </div>
             </ng-template>
           </ngb-tab>

@@ -20,6 +20,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {LocalStorageService} from './shared/local-storage.service';
 import {WeatherMapService} from './shared/weather-map.service';
 import {IndexedDBService} from './shared/indexed-db.service';
+import {NgxLineChartModule} from 'ngx-line-chart';
 
 @NgModule({
   declarations: [
@@ -30,17 +31,18 @@ import {IndexedDBService} from './shared/indexed-db.service';
     ProfileComponent,
     ...AppRoutingModule.routableComponents
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    CoreModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    NgbModule,
-    NgbAlertModule,
-    StorageServiceModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        CoreModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        NgbModule,
+        NgbAlertModule,
+        StorageServiceModule,
+        HttpClientModule,
+        NgxLineChartModule
+    ],
   providers: [
     UserService,
     LoggedInGuard,
