@@ -40,7 +40,7 @@ export class ModalComponent implements OnInit {
     this.modalService.open(this.content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
-      // get the current city list from model
+      // get the city list from model
       const arrayCity: any[] = this._user.cityFunction;
 
       // if not empty detect the selected city is in it or no
@@ -48,11 +48,11 @@ export class ModalComponent implements OnInit {
       if (arrayCity) {
         const found = arrayCity.find(element => element.city.id === this._tempCity.city.id);
         if (!found) {
-          arrayCity.push(this._tempCity);
+          arrayCity.push(Object.assign(this._tempCity, this.forecast(this._tempCity)));
           this._user.cityFunction = arrayCity;
         }
       } else {
-        arrayCity.push(this._tempCity);
+        arrayCity.push(Object.assign(this._tempCity, this.forecast(this._tempCity)));
         this._user.cityFunction = arrayCity;
       }
 
@@ -90,6 +90,28 @@ export class ModalComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  forecast(object) {
+    const arrayForecast = [];
+    const newObject =
+      {
+        name: object.city.name,
+        points: []
+      };
+
+    for (let i = 1; i <= 5; i++) {
+      // let dayIndicator;
+      // i === 1 ? dayIndicator = 'Holnap' : dayIndicator = i + '. nap';
+      newObject.points.push(
+        {
+          x: i, y: object.data[i].temp.day
+        }
+      );
+    }
+    arrayForecast.push(newObject);
+
+    return {forecast: arrayForecast};
   }
 
   private getDismissReason(reason: any): string {

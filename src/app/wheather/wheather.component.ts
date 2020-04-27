@@ -14,7 +14,6 @@ export class WheatherComponent implements OnInit, OnDestroy {
   user$: Observable<UserModel>;
   objects: any = [];
   @ViewChild('myModal') modal: ModalComponent;
-  arrayForecast = [];
   private _user: UserModel;
   private _subscription: Subscription;
 
@@ -30,7 +29,6 @@ export class WheatherComponent implements OnInit, OnDestroy {
       this._user = user;
     });
     this.refreshTab();
-    this.forecast();
   }
 
   ngOnDestroy(): void {
@@ -38,7 +36,7 @@ export class WheatherComponent implements OnInit, OnDestroy {
   }
 
   formatXAxisValue(value: number) {
-    return `Value ${value}`;
+    return value === 1 ? `Holnap` : `${value} .nap`;
   }
 
   onTabChange($event) {
@@ -49,34 +47,10 @@ export class WheatherComponent implements OnInit, OnDestroy {
 
   updateTabContent() {
     this.refreshTab();
-    this.forecast();
   }
 
   refreshTab() {
     this.objects = this._user.cityFunction;
-  }
-
-  forecast() {
-    this._user.cityFunction.forEach((object) => {
-      const newObject =
-        {
-          name: object.city.name,
-          points: []
-        };
-
-      for (let i = 1; i <= 5; i++) {
-
-        let dayIndicator;
-        i === 1 ? dayIndicator = 'Holnap' : dayIndicator = i + '. nap';
-        newObject.points.push(
-          {
-            x: i, y: object.data[i].temp.day,
-            // name: dayIndicator
-          }
-        );
-      }
-      this.arrayForecast.push(newObject);
-    });
   }
 
   deleteCity(id: number) {
