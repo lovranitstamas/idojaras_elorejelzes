@@ -48,7 +48,10 @@ export class WheatherComponent implements OnInit, OnDestroy {
   }
 
   onTabChange($event) {
-    if ($event.nextId === 'modal') {
+  }
+
+  onTabClick() {
+    if (this.ngbTabSet.activeId === 'modal') {
       this.modal.open();
     }
   }
