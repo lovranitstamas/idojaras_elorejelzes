@@ -8,5 +8,6 @@ import {Component, Input} from '@angular/core';
 export class LoadingSpinnerComponent {
   @Input() loaderWidth = 120;
   @Input() loaderHeight = 120;
+  @Input() extraInformation = 'Új regisztrációkor az adatbázis előkészítése kis időt vesz igénybe';
 
 }

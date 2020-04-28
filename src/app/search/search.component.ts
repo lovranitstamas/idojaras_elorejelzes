@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit {
   warningMessage = '';
   detectCity = false;
   countryListDB: any;
+  citiesOnLoad: boolean;
   @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
   @Output() tempCity: EventEmitter<any> = new EventEmitter();
   private _user: UserModel;
@@ -42,12 +43,19 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.citiesOnLoad = true;
     this._userService.getCurrentUser().subscribe(user => {
       this._user = user;
     });
 
     this._indexedDBService.findAllDB(this._user.cityFunction).then(res => {
-      Object.keys(res).length ? this.countryListDB = res : this.countryListDB = null;
+      if (Object.keys(res).length) {
+        this.countryListDB = res;
+        this.citiesOnLoad = false;
+      } else {
+        this.countryListDB = null;
+        this.citiesOnLoad = false;
+      }
     });
 
     // TODO test call in backend case
