@@ -4,6 +4,8 @@
            [value]="query"
            (keydown.enter)="submit(newquery.value)">
     <button (click)="submit(newquery.value)">Keresés</button>
+    <br>
+    <span class="mt-2 text-info">Város nevét nagy kezdőbetűvel szíveskedjék megadni</span>
   </div>
   <span class="error">{{this.warningMessage}}</span>
   <br>

@@ -100,14 +100,16 @@ export class ModalComponent implements OnInit {
         points: []
       };
 
-    for (let i = 1; i <= 5; i++) {
-      // let dayIndicator;
-      // i === 1 ? dayIndicator = 'Holnap' : dayIndicator = i + '. nap';
-      newObject.points.push(
-        {
-          x: i, y: object.data[i].temp.day
-        }
-      );
+    for (let i = 0; i <= 5; i++) {
+      if (i > 0) {
+        // let dayIndicator;
+        // i === 1 ? dayIndicator = 'Holnap' : dayIndicator = i + '. nap';
+        newObject.points.push(
+          {
+            x: i, y: (object.data[i].temp.day - 273.15).toFixed(0)
+          }
+        );
+      }
     }
     arrayForecast.push(newObject);
 

@@ -36,8 +36,8 @@
 
                 <hr>
 
-                <h4>Hőmérséklet: {{object.data[0].temp.day}}</h4>
-                <h4>Páratartalom: {{object.data[0].humidity}}</h4>
+                <h4>Hőmérséklet: {{(object.data[0].temp.day - 273.15).toFixed(0)}} °C</h4>
+                <h4>Páratartalom: {{object.data[0].humidity}} %</h4>
                 <h4>Légnyomás: {{object.data[0].pressure}}</h4>
                 <h4>Szélerősség-irány: {{object.data[0].speed}}</h4>
 
