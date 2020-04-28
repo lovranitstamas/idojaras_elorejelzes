@@ -10,16 +10,22 @@
     <span class="text-success font-weight-bold" *ngIf="detectCity">A keresett helység megtalálható</span>
   </div>-->
 
-  <div class="input-group">
-    <select #newquery (change)="submit(newquery.value)">
-      <option value="">Kérem válasszon</option>
-      <option *ngFor="let object of countryListDB" [ngValue]="object.city.name">
-        {{object.city.name}}
-      </option>
-    </select>
-  </div>
+  <ng-container *ngIf="countryListDB!==null; else listEmpty">
+    <div class="input-group">
+      <select #newquery (change)="submit(newquery.value)">
+        <option value="">Kérem válasszon</option>
+        <option *ngFor="let object of countryListDB" [ngValue]="object.city.name">
+          {{object.city.name}}
+        </option>
+      </select>
+    </div>
 
-  <br>
-  <span class="error">{{this.warningMessage}}</span>
+    <br>
+    <span class="error">{{this.warningMessage}}</span>
+  </ng-container>
+  <ng-template #listEmpty>
+    <br>
+    <span class="error">A lista üres</span>
+  </ng-template>
 
 </div>

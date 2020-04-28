@@ -39,7 +39,7 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this._indexedDBService.findAllDB().then(res => {
-      this.countryListDB = res;
+      Object.keys(res).length ? this.countryListDB = res : this.countryListDB = null;
     });
 
     // TODO test call in backend case
