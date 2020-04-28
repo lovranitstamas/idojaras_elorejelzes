@@ -4,18 +4,23 @@ import {Observable, Subscription} from 'rxjs';
 import {UserService} from '../shared/user.service';
 import {ModalComponent} from '../core/modal/modal.component';
 import {LocalStorageService} from '../shared/local-storage.service';
+import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
+import {NgbTabset} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-wheather',
   templateUrl: './wheather.component.html',
-  styleUrls: ['./wheather.component.scss']
+  styleUrls: ['./wheather.component.scss'],
+  providers: [NgbTabsetConfig]
 })
 export class WheatherComponent implements OnInit, OnDestroy {
+  updateProcessing: boolean;
   user$: Observable<UserModel>;
   objects: any = [];
 
   @ViewChild('myModal') modal: ModalComponent;
-  @ViewChild('myTabs') ngbTabSet;
+  @ViewChild('myTabs') ngbTabSet: NgbTabset;
+
   private _user: UserModel;
   private _subscription: Subscription;
 
@@ -25,6 +30,7 @@ export class WheatherComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    this.updateProcessing = false;
     this.user$ = this._userService.getCurrentUser();
 
     this._subscription = this._userService.getCurrentUser().subscribe(user => {
@@ -48,9 +54,12 @@ export class WheatherComponent implements OnInit, OnDestroy {
   }
 
   updateTabContent(id) {
+    this.updateProcessing = true;
     this.refreshTab();
-    console.log(id);
-    this.ngbTabSet.select(id);
+    setTimeout(() => {
+      this.ngbTabSet.select('ngb-tab-' + id);
+      this.updateProcessing = false;
+    }, 1500);
   }
 
   refreshTab() {

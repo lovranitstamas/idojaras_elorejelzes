@@ -8,7 +8,7 @@
         <ngb-tabset [destroyOnHide]="false" (tabChange)="onTabChange($event)" #myTabs>
           <ngb-tab title="Útmutató" *ngIf="!objects.length;">
             <ng-template ngbTabContent>
-              <h1 class="mt-5">Üdvözöllek a honlapon</h1>
+              <h1 class="mt-5">Üdvözöllek a honlapon kedves {{user.usernameFunction}}!</h1>
               <div class="container">
                 <ul class="mt-5">
                   <li>
@@ -21,13 +21,15 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects | orderBy:'city.name';" id="{{object.city.id}}">
+          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects | orderBy:'city.name';"
+                   id="ngb-tab-{{object.city.id}}">
             <ng-template ngbTabContent>
               <div class="container my-5 text-center">
                 <h4 class="text-left">Felhasználó: {{user.usernameFunction}}</h4>
 
                 <p class="text-right">
-                  <button class="btn btn-danger btn-lg" (click)="deleteCity(object.city.id)">Törlés a listából</button>
+                  <button class="btn btn-danger btn-lg" (click)="deleteCity(object.city.id)">Törlés a listából
+                  </button>
                 </p>
 
                 <h2>Időjárási adatok</h2>
@@ -42,21 +44,24 @@
                 <h4>Szélerősség-irány: {{object.data[0].speed}}</h4>
 
                 <h3 class="mt-3">5 napos hőmérséklet előrejelzés</h3>
-                <ngx-line-chart [dataSets]="object.forecast" [xLabelFunction]="formatXAxisValue.bind(this)"></ngx-line-chart>
+                <ngx-line-chart [dataSets]="object.forecast"
+                                [xLabelFunction]="formatXAxisValue.bind(this)"></ngx-line-chart>
 
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab id="modal">
-            <ng-template ngbTabTitle>+</ng-template>
+          <ngb-tab id="modal" title="+">
+            <ng-template ngbTabContent>
+              <app-loading-spinner extraInformation="" *ngIf="updateProcessing;"></app-loading-spinner>
+            </ng-template>
           </ngb-tab>
-
         </ngb-tabset>
 
       </ng-container>
       <ng-template #loading>
-        <app-loading-spinner></app-loading-spinner>
+        <app-loading-spinner extraInformation=""></app-loading-spinner>
       </ng-template>
+
     </div>
   </div>
 </div>

@@ -13,7 +13,7 @@
   <ng-container *ngIf="!citiesOnLoad; else citiesOnLoadSpinner">
     <ng-container *ngIf="countryListDB!==null; else listEmpty">
       <div class="input-group">
-        <select #newquery (change)="submit(newquery.value)">
+        <select #newquery (change)="submit(newquery.value)" class="form-control">
           <option value="">Kérem válasszon</option>
           <option *ngFor="let object of countryListDB" [ngValue]="object.city.name">
             {{object.city.name}}
