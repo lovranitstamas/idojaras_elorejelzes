@@ -85,7 +85,7 @@ export class ModalComponent implements OnInit {
       this.enableSave = false;
 
       // refresh tab
-      this.updateTab.emit(true);
+      this.updateTab.emit(this._tempCity.city.id);
 
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;

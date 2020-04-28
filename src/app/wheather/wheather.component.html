@@ -3,9 +3,9 @@
     <div class="col my-5">
       <ng-container *ngIf="(user$ | async) as user; else loading">
 
-        <app-modal #myModal (updateTab)="updateTabContent()"></app-modal>
+        <app-modal #myModal (updateTab)="updateTabContent($event)"></app-modal>
 
-        <ngb-tabset [destroyOnHide]="false" (tabChange)="onTabChange($event)">
+        <ngb-tabset [destroyOnHide]="false" (tabChange)="onTabChange($event)" #myTabs>
           <ngb-tab title="Útmutató" *ngIf="!objects.length;">
             <ng-template ngbTabContent>
               <h1 class="mt-5">Üdvözöllek a honlapon</h1>
@@ -21,7 +21,7 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects;">
+          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects;" id="{{object.city.id}}">
             <ng-template ngbTabContent>
               <div class="container my-5 text-center">
                 <h4 class="text-left">Felhasználó: {{user.usernameFunction}}</h4>

@@ -13,7 +13,9 @@ import {LocalStorageService} from '../shared/local-storage.service';
 export class WheatherComponent implements OnInit, OnDestroy {
   user$: Observable<UserModel>;
   objects: any = [];
+
   @ViewChild('myModal') modal: ModalComponent;
+  @ViewChild('myTabs') ngbTabSet;
   private _user: UserModel;
   private _subscription: Subscription;
 
@@ -45,8 +47,10 @@ export class WheatherComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateTabContent() {
+  updateTabContent(id) {
     this.refreshTab();
+    console.log(id);
+    this.ngbTabSet.select(id);
   }
 
   refreshTab() {
@@ -86,4 +90,5 @@ export class WheatherComponent implements OnInit, OnDestroy {
     this.refreshTab();
 
   }
+
 }
