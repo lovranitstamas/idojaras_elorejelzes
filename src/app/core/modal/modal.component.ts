@@ -4,6 +4,8 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {UserService} from '../../shared/user.service';
 import {UserModel} from '../../shared/user-model';
 import {LocalStorageService} from '../../shared/local-storage.service';
+import {LocalUserObjectInterface} from '../../shared/localUserObjectInterface';
+import {ForecastInterface} from '../../shared/forecastInterface';
 
 @Component({
   selector: 'app-modal',
@@ -63,7 +65,7 @@ export class ModalComponent implements OnInit {
       });
 
       // store the modified user in a variable
-      const modifiedUser = {
+      const modifiedUser: LocalUserObjectInterface = {
         username: this._user.usernameFunction,
         password: theUser.password,
         city: arrayCity
@@ -94,7 +96,7 @@ export class ModalComponent implements OnInit {
 
   forecast(object) {
     const arrayForecast = [];
-    const newObject =
+    const newObject: ForecastInterface =
       {
         name: object.city.name,
         points: []

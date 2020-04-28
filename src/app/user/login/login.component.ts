@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserModel} from '../../shared/user-model';
 import {IndexedDBService} from '../../shared/indexed-db.service';
 import {LocalStorageService} from '../../shared/local-storage.service';
+import {LocalUserObjectInterface} from '../../shared/localUserObjectInterface';
 
 /**
  * Our custom validator
@@ -63,7 +64,7 @@ export class LoginComponent implements OnInit {
     this.passwordWrong = '';
 
     if (form.valid) {
-      if (this.makeUserInstance(form, this._localStorageService.getOnLocalStorage())){
+      if (this.makeUserInstance(form, this._localStorageService.getOnLocalStorage())) {
         this.startOnProcessDB();
       }
     }
@@ -93,7 +94,7 @@ export class LoginComponent implements OnInit {
         // change obj to API result
 
         // local storage
-        const obj = {
+        const obj: LocalUserObjectInterface = {
           username: form.value.username.trim(),
           password: form.value.password,
           city: []
