@@ -8,6 +8,7 @@ import {CollapseModule} from 'ngx-bootstrap/collapse';
 import {ModalComponent} from './modal/modal.component';
 import {LoadingSpinnerComponent} from './loading-spinner/loading-spinner.component';
 import {SearchComponent} from '../search/search.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,11 +18,12 @@ import {SearchComponent} from '../search/search.component';
     LoadingSpinnerComponent,
     SearchComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    CollapseModule.forRoot()
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        CollapseModule.forRoot(),
+        FormsModule
+    ],
   exports: [
     FooterComponent,
     NavbarComponent,

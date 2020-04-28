@@ -93,4 +93,42 @@ export class IndexedDBService {
       };
     });
   }
+
+  findAllDB() {
+    return new Promise((resolve, reject) => {
+      const dbReq = indexedDB.open('weatherDB', 1);
+
+      dbReq.onsuccess = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result;
+
+        // open a read/write db transaction, ready for adding the data
+        const transaction = db.transaction(['cities'], 'readwrite');
+
+        // report on the success of the transaction completing, when everything is done
+        transaction.oncomplete = () => {
+          console.log('Transaction completed');
+        };
+
+        transaction.onerror = () => {
+          console.log(transaction.error);
+          reject(event);
+        };
+
+        // create an object store on the transaction
+        const objectStore = transaction.objectStore('cities').index('name');
+
+        // Make a request to get a record by key from the object store
+        const objectStoreRequest = objectStore.getAll();
+
+        objectStoreRequest.onsuccess = () => {
+          if (objectStoreRequest.result) {
+            const result = objectStoreRequest.result;
+            resolve(result);
+          }
+          reject(event);
+        };
+      };
+    });
+  }
+
 }

@@ -15,8 +15,10 @@ export class SearchComponent implements OnInit {
   results: any;
   warningMessage = '';
   detectCity = false;
+  countryListDB: any;
   @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
   @Output() tempCity: EventEmitter<any> = new EventEmitter();
+
   @HostListener('input')
   oninput() {
     this.enableSave.emit(false);
@@ -36,6 +38,10 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._indexedDBService.findAllDB().then(res => {
+      this.countryListDB = res;
+    });
+
     // TODO test call in backend case
     // this.search();
   }
@@ -82,7 +88,8 @@ export class SearchComponent implements OnInit {
     if (queryParam.trim().length) {
       this.searchFromLocalDisk(queryParam.trim());
     } else {
-      this.warningMessage = 'Min 1. karakter';
+      // this.warningMessage = 'Min 1. karakter';
+      this.warningMessage = 'Kérem válasszon!';
     }
 
     // TODO test call in backend case
