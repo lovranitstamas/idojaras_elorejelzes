@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {WeatherMapService} from '../shared/weather-map.service';
 import {HttpClient} from '@angular/common/http';
 import {IndexedDBService} from '../shared/indexed-db.service';
+import {UserService} from '../shared/user.service';
+import {UserModel} from '../shared/user-model';
 
 @Component({
   selector: 'app-search',
@@ -18,6 +20,7 @@ export class SearchComponent implements OnInit {
   countryListDB: any;
   @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
   @Output() tempCity: EventEmitter<any> = new EventEmitter();
+  private _user: UserModel;
 
   @HostListener('input')
   oninput() {
@@ -29,7 +32,8 @@ export class SearchComponent implements OnInit {
               private _router: Router,
               private _route: ActivatedRoute,
               private _http: HttpClient,
-              private _indexedDBService: IndexedDBService) {
+              private _indexedDBService: IndexedDBService,
+              private _userService: UserService) {
     this._route
       .queryParams
       .subscribe(params => {
@@ -38,7 +42,11 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._indexedDBService.findAllDB().then(res => {
+    this._userService.getCurrentUser().subscribe(user => {
+      this._user = user;
+    });
+
+    this._indexedDBService.findAllDB(this._user.cityFunction).then(res => {
       Object.keys(res).length ? this.countryListDB = res : this.countryListDB = null;
     });
 

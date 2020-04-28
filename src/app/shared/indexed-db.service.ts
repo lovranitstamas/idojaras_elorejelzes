@@ -94,7 +94,7 @@ export class IndexedDBService {
     });
   }
 
-  findAllDB() {
+  findAllDB(assignedCityList) {
     return new Promise((resolve, reject) => {
       const dbReq = indexedDB.open('weatherDB', 1);
 
@@ -120,10 +120,21 @@ export class IndexedDBService {
         // Make a request to get a record by key from the object store
         const objectStoreRequest = objectStore.getAll();
 
+        const selectedCities = [];
         objectStoreRequest.onsuccess = () => {
           if (objectStoreRequest.result) {
+            // push the list only the not saved cities
             const result = objectStoreRequest.result;
-            resolve(result);
+            result.filter((item) => {
+              const found = assignedCityList.find((innerItem) => {
+                return item.city.name === innerItem.city.name;
+              });
+              if (!found) {
+                selectedCities.push(item);
+              }
+            });
+
+            resolve(selectedCities);
           }
           reject(event);
         };
