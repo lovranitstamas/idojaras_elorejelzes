@@ -21,7 +21,7 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects;" id="{{object.city.id}}">
+          <ngb-tab title="{{object.city.name}}" *ngFor="let object of objects | orderBy:'city.name';" id="{{object.city.id}}">
             <ng-template ngbTabContent>
               <div class="container my-5 text-center">
                 <h4 class="text-left">Felhasználó: {{user.usernameFunction}}</h4>
