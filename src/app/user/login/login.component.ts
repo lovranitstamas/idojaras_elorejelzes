@@ -126,7 +126,7 @@ export class LoginComponent implements OnInit {
         }
       }
     } else {
-      const obj = {
+      const obj: LocalUserObjectInterface = {
         username: form.value.username.trim(),
         password: form.value.password,
         city: []
