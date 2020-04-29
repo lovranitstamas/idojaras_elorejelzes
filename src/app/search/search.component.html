@@ -1,36 +1,45 @@
 <div class="form-group">
-  <!--<div class="input-group">
-    <input type="text" #newquery
-           [value]="query"
-           (keydown.enter)="submit(newquery.value)">
-    <button (click)="submit(newquery.value)">Keresés</button>
-    <br>
-    <span class="mt-2 text-info">Város nevét nagy kezdőbetűvel szíveskedjék megadni</span>
 
-    <span class="text-success font-weight-bold" *ngIf="detectCity">A keresett helység megtalálható</span>
-  </div>-->
+  <ng-container *ngIf="explorer; else notExplorer">
+    <div class="form-group">
+      <input type="text" class="form-control" #newquery
+             [value]="query"
+             (keydown.enter)="submit(newquery.value)">
+      <button class="btn btn-primary form-control mt-2" (click)="submit(newquery.value)">Keresés</button>
 
-  <ng-container *ngIf="!citiesOnLoad; else citiesOnLoadSpinner">
-    <ng-container *ngIf="countryListDB!==null; else listEmpty">
-      <div class="input-group">
-        <select #newquery (change)="submit(newquery.value)" class="form-control">
-          <option value="">Kérem válasszon</option>
-          <option *ngFor="let object of countryListDB" [ngValue]="object.city.name">
-            {{object.city.name}}
-          </option>
-        </select>
-      </div>
+      <p class="text-info">
+        Város nevét nagy kezdőbetűvel szíveskedjék megadni
+      </p>
 
-      <br>
-      <span class="error">{{this.warningMessage}}</span>
-    </ng-container>
-    <ng-template #listEmpty>
-      <br>
-      <span class="error">A lista üres</span>
-    </ng-template>
+      <p class="text-success font-weight-bold" *ngIf="detectCity">
+        A keresett helység megtalálható
+      </p>
+      <span class="error font-weight-bold">{{this.warningMessage}}</span>
+    </div>
   </ng-container>
-  <ng-template #citiesOnLoadSpinner>
-    <app-loading-spinner extraInformation=""></app-loading-spinner>
+  <ng-template #notExplorer>
+    <ng-container *ngIf="!citiesOnLoad; else citiesOnLoadSpinner">
+      <ng-container *ngIf="countryListDB!==null; else listEmpty">
+        <div class="input-group">
+          <select #newquery (change)="submit(newquery.value)" class="form-control">
+            <option value="">Kérem válasszon</option>
+            <option *ngFor="let object of countryListDB" [ngValue]="object.city.name">
+              {{object.city.name}}
+            </option>
+          </select>
+        </div>
+
+        <br>
+        <span class="error">{{this.warningMessage}}</span>
+      </ng-container>
+      <ng-template #listEmpty>
+        <br>
+        <span class="error">A lista üres</span>
+      </ng-template>
+    </ng-container>
+    <ng-template #citiesOnLoadSpinner>
+      <app-loading-spinner extraInformation=""></app-loading-spinner>
+    </ng-template>
   </ng-template>
 
 </div>

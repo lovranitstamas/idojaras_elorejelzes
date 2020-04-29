@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   detectCity = false;
   countryListDB: any;
   citiesOnLoad: boolean;
+  explorer: boolean;
   @Output() enableSave: EventEmitter<boolean> = new EventEmitter();
   @Output() tempCity: EventEmitter<any> = new EventEmitter();
   private _user: UserModel;
@@ -48,6 +49,8 @@ export class SearchComponent implements OnInit {
       this._user = user;
     });
 
+    this.check_ie() ? this.explorer = true : this.explorer = false;
+
     this._indexedDBService.findAllDB(this._user.cityFunction).then(res => {
       if (Object.keys(res).length) {
         this.countryListDB = res;
@@ -60,6 +63,26 @@ export class SearchComponent implements OnInit {
 
     // TODO test call in backend case
     // this.search();
+  }
+
+  check_ie() {
+    if (/MSIE 10/i.test(navigator.userAgent)) {
+      // This is internet explorer 10
+      return true;
+    }
+
+    if (/MSIE 9/i.test(navigator.userAgent) || /rv:11.0/i.test(navigator.userAgent)) {
+      // This is internet explorer 9 or 11
+      return true;
+    }
+
+    if (/Edge\/\d./i.test(navigator.userAgent)) {
+      // This is Microsoft Edge
+      return true;
+    }
+
+    return false;
+
   }
 
   // TODO test call in backend case
